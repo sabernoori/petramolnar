@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
         slidesPerView: 2,
         centeredSlides: true,
         speed: 800,
+        spaceBetween: 24,
         grabCursor: true,
         // Navigation arrows
         navigation: {
@@ -13,9 +14,19 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         parallax: true,
         autoplay: {
-            delay: 18000, // Time between slides in milliseconds (3 seconds)
-            disableOnInteraction: false, // Continue autoplay after user interactions
+            delay: 18000,
+            disableOnInteraction: false,
         },
+        breakpoints: {
+            320: {
+                slidesPerView: 1,
+                spaceBetween: 16
+            },
+            768: {
+                slidesPerView: 2,
+                spaceBetween: 24
+            }
+        }
     });
 
     // Get all work items
