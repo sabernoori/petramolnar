@@ -1,0 +1,14 @@
+{
+  "name": "saber",
+  "version": "1.0.0",
+  "main": "scraper.js",
+  "scripts": {
+    "petra": "node scraper.js > structure.md"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "puppeteer": "^24.4.0"
+  }
+}

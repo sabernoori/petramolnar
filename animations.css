@@ -1,0 +1,23 @@
+.work_item {
+  transition: all 0.3s ease;
+}
+
+.work_item:hover .work_card_img {
+  opacity: 0;
+}
+
+.work_card_img {
+  transition: opacity 0.15s ease;
+}
+
+.work-card_learn-more {
+  opacity: 0;
+  transform: translate(-130%, 180%);
+  transform-origin: bottom left;
+  transition: all 0.3s ease;
+}
+
+.work_item:hover .work-card_learn-more {
+  opacity: 1;
+  transform: translate(0, 0);
+}

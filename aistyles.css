@@ -1,0 +1,58 @@
+.hero_logos {
+  overflow: hidden;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.hero_logos-container {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap;
+  gap: 160px;
+  /* Added will-change for better performance during GSAP animations */
+  will-change: transform;
+}
+
+.hero_logo_image {
+  flex-shrink: 0;
+  padding: 0 !important;
+  /* Added for smoother animations */
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Clients logo styles */
+.clients_logo {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.clients_logos-container {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap;
+  gap: 160px;
+  /* Added will-change for better performance during GSAP animations */
+  will-change: transform;
+}
+
+.clients_logo_image {
+  flex-shrink: 0;
+  padding: 0 !important;
+  /* Added for smoother animations */
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.swiper-slide.is-testimony .tastimonial_card{
+  opacity: 0.40;
+  transform: scale(0.6);
+}
+
+
+.swiper-slide.is-testimony.swiper-slide-active .tastimonial_card{
+  opacity: 1;
+  transform: scale(1);  
+}
