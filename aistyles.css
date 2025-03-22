@@ -64,17 +64,12 @@
 /* Button styles with flair animation */
 .button {
   border: 1px solid #ffffff; 
-  background-color: transparent;
-  border-radius: 5rem;
-  padding: .5rem 1.5rem;
-  font-size: clamp(.1rem, 3vw, 1.25rem);
-  font-weight: 600;
+  background-color: #000000;
   /* Border transitions handled by GSAP */
   position: relative;
   overflow: hidden;
   cursor: pointer;
   color: #fff;
-  z-index: 1;
 }
 
 .w-button {
@@ -84,6 +79,114 @@
   border: 0;
   text-decoration: none;
   display: inline-block;
+  
+}
+
+.button__flair {
+  
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: scale(0);
+  transform-origin: 0 0;
+  will-change: transform;
+  z-index: -1;
+}
+
+.button__flair:before {
+  aspect-ratio: 1/1;
+  background-color: var(--_colors---brand);
+  border-radius: 50%;
+  content: "";
+  display: block;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -50%);
+  width: 200%;
+  color: #fff;
+
+}
+
+.button:hover {
+  border-color: rgba(255, 255, 255, 0.07);
+  color: #fff;
+}
+
+.button__flair:before {
+  background-color: var(--_colors---brand);
+  z-index: -1;
+}
+
+
+.button__flair {
+  z-index: -1;
+}
+
+.w-button {
+  color: #fff;
+  line-height: inherit;
+  cursor: pointer;
+  border: 0;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.button-big {
+  background-color: var(--_colors---brand);
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 5rem;
+  padding: .75rem clamp(1rem, 1.5vw, 1.5rem);
+  font-family: Dela Gothic One, sans-serif;
+  font-weight: 400;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 1;
+}
+
+@media screen and (max-width: 991px) {
+  .button-big {
+    font-size: clamp(.75rem, 2vw, 1rem);
+  }
+}
+
+.button-big:hover {
+  background-color: var(--_colors---brand);
+  color: #fff;
+}
+
+.button-big__flair {
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: scale(0);
+  transform-origin: 0 0;
+  will-change: transform;
+  z-index: -1;
+}
+
+.button-big__flair:before {
+  aspect-ratio: 1/1;
+  background-color: #000000;
+  border-radius: 50%;
+  content: "";
+  display: block;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -50%);
+  width: 200%;
 }
 
 .button__flair {
@@ -125,9 +228,7 @@
   z-index: -1;
 }
 
-.button {
-  z-index: 2;
-}
+
 .button__flair {
   z-index: -1;
 }
@@ -141,19 +242,37 @@
   display: inline-block;
 }
 
-.button__flair {
-  bottom: 0;
-  left: 0;
-  pointer-events: none;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transform: scale(0);
-  transform-origin: 0 0;
-  will-change: transform;
-  z-index: -1;
+
+.section_heading_wrapper {
+  width: 100%;
+  height: auto;
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.section_heading {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-family: Dela Gothic One;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: clamp(2.083rem, 4.63vw, 4.167rem);
+  overflow: hidden;
 }
 
 
+/* Footer contact item hover animation */
+.footer_contact_item .footer_icon,
+.footer_contact_item .footer_text {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
 
+.footer_contact_item:hover .footer_icon,
+.footer_contact_item:hover .footer_text {
+  opacity: 1;
+}
 

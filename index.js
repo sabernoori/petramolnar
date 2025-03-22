@@ -11,6 +11,11 @@ document.addEventListener('DOMContentLoaded', function() {
     gsap.registerPlugin(ScrollTrigger);
     gsap.registerPlugin(TextPlugin);
     
+    // Only disable scrolling if page loads at top
+    if (window.scrollY === 0) {
+      document.body.style.overflow = 'hidden';
+    }
+    
     // Initialize the animations
     initHeroAnimation();
     initMarqueeAnimation();
@@ -26,9 +31,12 @@ function initHeroAnimation() {
   const textSpan = document.querySelector('.text-span');
   const heroTitleWrapper = document.querySelector('.hero_title_wrapper');
   const titleSpan = document.querySelector('.title_span');
+  const heroTitleLittle = document.querySelector('.hero_title-little');
+  const heroDescription = document.querySelector('.hero_description');
+  const heroButton = document.querySelector('.hero_descriptions .button-big');
   
-  if (!heroTitle || !textSpan) {
-    console.error('Hero title or text span not found');
+  if (!heroTitle || !textSpan || !heroTitleLittle) {
+    console.error('Required hero elements not found');
     return;
   }
   
@@ -39,18 +47,58 @@ function initHeroAnimation() {
     }
   });
   
-  // Set initial states - hide elements
-  gsap.set([textSpan, heroTitle], { opacity: 0 });
+  // Set initial states - hide elements and position
+  gsap.set([heroTitleLittle], { 
+    opacity: 0,
+    y: 100 // Start from below
+  });
+  
+  // Set initial state for nav_container
+  const navContainer = document.querySelector('.nav_container');
+  if (navContainer) {
+    gsap.set(navContainer, {
+      opacity: 0,
+      y: -50, // Start from above
+      visibility: 'visible' // Keep in layout flow
+    });
+  }
+  
+  // Set initial state for hero description and button - keep in layout flow
+  if (heroDescription) {
+    gsap.set(heroDescription, {
+      opacity: 0,
+      y: 50, // Start from below
+      visibility: 'visible' // Keep in layout flow
+    });
+  }
+  
+  if (heroButton) {
+    gsap.set(heroButton, {
+      opacity: 0,
+      y: 50, // Start from below
+      visibility: 'visible' // Keep in layout flow
+    });
+  }
+
+  // Set initial state for hero logos
+  const heroLogos = document.querySelector('.hero_logos');
+  if (heroLogos) {
+    gsap.set(heroLogos, {
+      opacity: 0,
+      y: 100, // Start from below
+      visibility: 'visible' // Keep in layout flow
+    });
+  }
   
   // Check if we have the new structure elements
   const usingNewStructure = heroTitleWrapper && titleSpan;
   
-  // First animate the "LET'S MAKE IT" text - original animation speed
-  tl.to(textSpan, {
+  // First animate the "LET'S MAKE IT" text with slower, more dramatic animation
+  tl.to(heroTitleLittle, {
     opacity: 1,
-    duration: 0.8, // Original animation speed
-    y: -10,
-    ease: "back.out(1.7)"
+    duration: 0.7, // Slower animation
+    y: -0, // More dramatic movement
+    ease: "power.out" // Smoother easing
   });
   
   // Extract the MOVE! text content based on structure
@@ -113,8 +161,8 @@ function initHeroAnimation() {
   letters.forEach((letter, index) => {
     tl.to(letter, {
       opacity: 1,
-      scale: 1.02,
-      duration: 0.4, // Slowed down animation
+      scale: 1.04,
+      duration: 0.3, // Slowed down animation
       ease: "elastic.out(1.2, 0.5)",
       onComplete: () => {
         // Add a small bounce effect - slower animation
@@ -131,14 +179,48 @@ function initHeroAnimation() {
   
   // Add a final bounce to the entire MOVE! text - slower animation
   tl.to(moveTextWrapper, {
-    scale: 1.02,
+    scale: 1.1,
     duration: 0.3, // Slowed down animation
     ease: "power2.out",
     yoyo: true,
     repeat: 1
   }, ">-0.15");
   
+  // Animate the hero description and button after the title animations complete
+  if (heroDescription) {
+    tl.to(heroDescription, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: "power3.out"
+    }, ">0.1") // Start slightly after the previous animation
+    .set(heroButton, { display: 'block' }, '<') // Show button at the start of description animation
+    .to(heroButton, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: "power3.out"
+    }, "<0.1") // Start slightly after description starts
+    .to(heroLogos, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "elastic.out(1, 0.5)"
+    }, "<0.2") // Start slightly after button animation starts
+    .to(navContainer, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "elastic.out(1, 0.5)"
+    }, "<0"); // Start at the same time as logos
+  }
+  
   // No glow effect as per user request
+  
+  // Re-enable scrolling after all animations complete
+  tl.eventCallback('onComplete', function() {
+    document.body.style.overflow = '';
+  });
 }
 
 function initMarqueeAnimation() {
@@ -178,17 +260,20 @@ function initMarqueeAnimation() {
     }
   });
   
-  // Optional: Pause animation when not in viewport to save resources
+  // Keep animation running when in viewport
   ScrollTrigger.create({
     trigger: '.hero_logos',
-    start: 'top bottom',
-    end: 'bottom top',
+    start: '-100% bottom', // Start trigger earlier
+    end: '200% top', // End trigger later
     markers: false,
     onEnter: () => marqueeAnimation.play(),
     onLeave: () => marqueeAnimation.pause(),
     onEnterBack: () => marqueeAnimation.play(),
     onLeaveBack: () => marqueeAnimation.pause()
   });
+  
+  // Ensure animation is playing when page loads
+  marqueeAnimation.play();
 }
 
 function initClientsMarqueeAnimation() {
@@ -216,7 +301,7 @@ function initClientsMarqueeAnimation() {
   const containerWidth = clientsLogosContainer.scrollWidth / 2;
   
   // Create the base animation - a continuous loop with slightly different speed
-  const baseSpeed = 120; // seconds for one complete loop (slightly slower than hero logos)
+  const baseSpeed = 60; // seconds for one complete loop (slightly slower than hero logos)
   const clientsMarqueeAnimation = gsap.to(clientsLogosContainer, {
     x: -containerWidth,
     duration: baseSpeed,
@@ -228,11 +313,11 @@ function initClientsMarqueeAnimation() {
     }
   });
   
-  // Optional: Pause animation when not in viewport to save resources
+  // Keep animation running for clients section when in viewport
   ScrollTrigger.create({
     trigger: '.clients_logo',
-    start: 'top bottom',
-    end: 'bottom top',
+    start: '-100% bottom', // Start trigger earlier
+    end: '200% top', // End trigger later
     markers: false,
     onEnter: () => clientsMarqueeAnimation.play(),
     onLeave: () => clientsMarqueeAnimation.pause(),
@@ -294,17 +379,18 @@ class Button {
       this.xSet(x);
       this.ySet(y);
 
-      gsap.timeline()
-        .to(this.DOM.button, {
-          borderColor: "rgba(255, 255, 255, 0.07)",
-          duration: 0.3,
-          ease: "power2.out"
-        })
-        .to(this.DOM.flair, {
-          scale: 1,
-          duration: 0.4,
-          ease: "power2.out"
-        }, "-=0.3");
+      const timeline = gsap.timeline();
+      
+      timeline.to(this.DOM.button, {
+        borderColor: "rgba(255, 255, 255, 0.07)",
+        duration: 0.3,
+        ease: "power2.out"
+      });
+      timeline.to(this.DOM.flair, {
+        scale: 1,
+        duration: 0.4,
+        ease: "power2.out"
+      }, "-=0.3");
     });
 
     this.DOM.button.addEventListener("mouseleave", (e) => {
@@ -312,13 +398,15 @@ class Button {
 
       gsap.killTweensOf([this.DOM.flair, this.DOM.button]);
 
-      gsap.timeline()
-        .to(this.DOM.button, {
-          borderColor: "#ffffff",
-          duration: 0.3,
-          ease: "power2.out"
-        })
-        .to(this.DOM.flair, {
+      const timeline = gsap.timeline();
+      
+      timeline.to(this.DOM.button, {
+        borderColor: "#ffffff",
+        duration: 0.3,
+        ease: "power2.out"
+      });
+      
+      timeline.to(this.DOM.flair, {
           xPercent: x > 90 ? x + 20 : x < 10 ? x - 20 : x,
           yPercent: y > 90 ? y + 20 : y < 10 ? y - 20 : y,
           scale: 0,
@@ -353,3 +441,101 @@ document.addEventListener('DOMContentLoaded', () => {
     new Button(button);
   });
 });
+
+
+
+
+class ButtonBig extends Button {
+  constructor(buttonElement) {
+    super(buttonElement);
+  }
+
+  init() {
+    const el = gsap.utils.selector(this.block);
+    this.DOM = {
+      button: this.block,
+      flair: el(".button-big__flair")
+    };
+
+    this.xSet = gsap.quickSetter(this.DOM.flair, "xPercent");
+    this.ySet = gsap.quickSetter(this.DOM.flair, "yPercent");
+
+    // Initialize background color for big buttons
+    gsap.set(this.DOM.button, {
+      backgroundColor: "var(--_colors---brand)"
+    });
+  }
+
+  initEvents() {
+    this.DOM.button.addEventListener("mouseenter", (e) => {
+      const { x, y } = this.getXY(e);
+      this.xSet(x);
+      this.ySet(y);
+
+      const timeline = gsap.timeline();
+      
+      timeline.to(this.DOM.button, {
+        backgroundColor: "var(--_colors---brand)",
+        duration: 0.3,
+        ease: "power2.out"
+      });
+      
+      timeline.to(this.DOM.flair, {
+        scale: 1,
+        duration: 0.5,
+        ease: "power3.inOut",
+        backgroundColor: "#000000"
+      }, "-=0.3");
+    });
+
+    this.DOM.button.addEventListener("mouseleave", (e) => {
+      const { x, y } = this.getXY(e);
+      gsap.killTweensOf([this.DOM.flair, this.DOM.button]);
+
+      const timeline = gsap.timeline();
+      
+      timeline.to(this.DOM.button, {
+        backgroundColor: "var(--_colors---brand)",
+        duration: 0.3,
+        ease: "power2.out"
+      });
+      
+      timeline.to(this.DOM.flair, {
+        xPercent: x > 90 ? x + 20 : x < 10 ? x - 20 : x,
+        yPercent: y > 90 ? y + 20 : y < 10 ? y - 20 : y,
+        scale: 0,
+        duration: 0.3,
+        ease: "power2.out"
+      }, "-=0.3");
+    });
+
+    this.DOM.button.addEventListener("mousemove", (e) => {
+      const { x, y } = this.getXY(e);
+      gsap.to(this.DOM.flair, {
+        xPercent: x,
+        yPercent: y,
+        duration: 0.4,
+        ease: "power2"
+      });
+    });
+  }
+}
+
+// Initialize button-big animations when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  const bigButtons = document.querySelectorAll('.button-big');
+  bigButtons.forEach(button => {
+    // Add flair element to each button
+    const flair = document.createElement('div');
+    flair.className = 'button-big__flair';
+    button.appendChild(flair);
+    
+    // Initialize button animation
+    new ButtonBig(button);
+  });
+});
+
+
+
+
+

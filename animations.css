@@ -22,3 +22,42 @@
   transform: translate(0, 0);
 }
 
+.nav_link-wrapper {
+  position: relative;
+  display: inline-block;
+  height: clamp(3rem, 3vw, 4rem);
+  overflow: hidden;
+}
+
+@media screen and (max-width: 480px) {
+  .nav_link-wrapper {
+    height: clamp(2.5rem, 2.5vw, 3.5rem);
+  }
+}
+
+.nav_link {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+  text-shadow: 0 calc(clamp(2.5rem, 2.5vw, 3.5rem) * 1.2) 0 var(--_colors---brand);
+  line-height: 1;
+  transform-origin: center;
+}
+
+@media screen and (max-width: 480px) {
+  .nav_link {
+    text-shadow: 0 calc(clamp(2rem, 2vw, 3rem) * 1.2) 0 var(--_colors---brand);
+  }
+}
+
+.nav_link-wrapper:hover .nav_link{
+  transform: translateY(-100%);
+}
+
+.nav_close {
+  transition: transform 0.3s ease;
+}
+
+.nav_close_btn:hover .nav_close {
+  transform: rotate(180deg);
+}
