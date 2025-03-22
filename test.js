@@ -1,1 +1,1 @@
-console.log("This is a test for syncing.")
+console.log("This is a test for syncing.");
