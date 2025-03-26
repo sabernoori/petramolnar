@@ -22,10 +22,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 slidesPerView: 1,
                 spaceBetween: 16
             },
-            992: {
-                slidesPerView: 1,
-                spaceBetween: 24
-            }
+            // 992: {
+            //     slidesPerView: 1,
+            //     spaceBetween: 24
+            // }
         }
     });
 

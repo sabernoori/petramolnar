@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "scraper.js",
   "scripts": {
-    "petra": "node scraper.js > structure.md"
+    "scraper": "node scraper.js > structure.md"
   },
   "author": "",
   "license": "ISC",
