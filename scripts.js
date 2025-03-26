@@ -17,16 +17,16 @@ document.addEventListener("DOMContentLoaded", function () {
             delay: 18000,
             disableOnInteraction: false,
         },
-        breakpoints: {
-            320: {
-                slidesPerView: 1,
-                spaceBetween: 16
-            },
-            // 992: {
-            //     slidesPerView: 1,
-            //     spaceBetween: 24
-            // }
-        }
+        // breakpoints: {
+        //     320: {
+        //         slidesPerView: 1,
+        //         spaceBetween: 16
+        //     },
+        //     992: {
+        //         slidesPerView: 1,
+        //         spaceBetween: 24
+        //     }
+        // }
     });
 
     // Get all work items
