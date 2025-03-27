@@ -158,8 +158,14 @@ function initHeroAnimation() {
   // Make heroTitle visible
   tl.set(heroTitle, { opacity: 1 });
   
+  // Check for existing wrapper to prevent duplicates
+  if (targetElement.querySelector('.move-text-wrapper')) {
+    return;
+  }
+
   // Create a wrapper for the MOVE! text that maintains the original width
   const moveTextWrapper = document.createElement('div');
+  moveTextWrapper.className = 'move-text-wrapper';
   moveTextWrapper.style.display = 'inline-block';
   moveTextWrapper.style.width = 'auto';
   moveTextWrapper.style.textAlign = 'left';
