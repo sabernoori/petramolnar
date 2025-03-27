@@ -11,27 +11,29 @@ document.addEventListener('DOMContentLoaded', function() {
     gsap.registerPlugin(ScrollTrigger);
     gsap.registerPlugin(TextPlugin);
     
-    // Initialize animations based on page type
+    // Check if we're on the homepage
     const isHomepage = window.location.pathname === '/' || 
                       window.location.pathname === '/home' || 
                       window.location.pathname.endsWith('/index.html') || 
                       window.location.pathname.endsWith('/');
     
-    // Initialize hero animation only on homepage
-    if (isHomepage) {
-      const heroElements = document.querySelector('.hero_title') && 
-                          document.querySelector('.text-span') && 
-                          document.querySelector('.hero_title-little');
-      
-      if (heroElements && window.scrollY === 0) {
+    // Only initialize hero animation and disable scroll if hero elements exist
+    const heroElements = document.querySelector('.hero_title') && 
+                        document.querySelector('.text-span') && 
+                        document.querySelector('.hero_title-little');
+    
+    // Initialize the animations
+    if (isHomepage && heroElements) {
+      // Disable scroll only if page loads at top and hero elements exist
+      if (window.scrollY === 0) {
         document.body.style.overflow = 'hidden';
-        initHeroAnimation();
       }
+      initHeroAnimation();
     }
     
-    // Initialize marquee animations for all pages
+    // Initialize other animations for all pages
     initMarqueeAnimation();
-    initClientsMarqueeAnimation();
+    initClientsMarqueeAnimation(); // Added clients marquee animation
   } else {
     console.error('GSAP or ScrollTrigger not loaded. Please add the required script tags.');
   }
@@ -122,18 +124,8 @@ function initHeroAnimation() {
     const heroTitles = document.querySelectorAll('.hero_title');
     if (heroTitles.length > 1) {
       targetElement = heroTitles[1];
-      // Hide duplicate hero_title elements
-      heroTitles.forEach((el, index) => {
-        if (index !== 1) el.style.display = 'none';
-      });
     }
   }
-
-  // Add safety check to prevent duplicate initialization
-  if (targetElement.dataset.processed) {
-    return;
-  }
-  targetElement.dataset.processed = true;
   
   // Extract text from the target element
   for (let i = 0; i < targetElement.childNodes.length; i++) {
@@ -158,14 +150,8 @@ function initHeroAnimation() {
   // Make heroTitle visible
   tl.set(heroTitle, { opacity: 1 });
   
-  // Check for existing wrapper to prevent duplicates
-  if (targetElement.querySelector('.move-text-wrapper')) {
-    return;
-  }
-
   // Create a wrapper for the MOVE! text that maintains the original width
   const moveTextWrapper = document.createElement('div');
-  moveTextWrapper.className = 'move-text-wrapper';
   moveTextWrapper.style.display = 'inline-block';
   moveTextWrapper.style.width = 'auto';
   moveTextWrapper.style.textAlign = 'left';
