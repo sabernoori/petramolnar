@@ -11,30 +11,27 @@ document.addEventListener('DOMContentLoaded', function() {
     gsap.registerPlugin(ScrollTrigger);
     gsap.registerPlugin(TextPlugin);
     
-    // Check if we're on the homepage
+    // Initialize animations based on page type
     const isHomepage = window.location.pathname === '/' || 
                       window.location.pathname === '/home' || 
                       window.location.pathname.endsWith('/index.html') || 
                       window.location.pathname.endsWith('/');
     
-    // Only initialize hero animation and disable scroll if hero elements exist
-    const heroElements = document.querySelector('.hero_title') && 
-                        document.querySelector('.text-span') && 
-                        document.querySelector('.hero_title-little');
-    
-    if (isHomepage && heroElements) {
-      // Disable scroll only if page loads at top and hero elements exist
-      if (window.scrollY === 0) {
+    // Initialize hero animation only on homepage
+    if (isHomepage) {
+      const heroElements = document.querySelector('.hero_title') && 
+                          document.querySelector('.text-span') && 
+                          document.querySelector('.hero_title-little');
+      
+      if (heroElements && window.scrollY === 0) {
         document.body.style.overflow = 'hidden';
+        initHeroAnimation();
       }
-      initHeroAnimation();
     }
     
-    // Initialize other animations for all pages
-    
-    // Initialize the animations
+    // Initialize marquee animations for all pages
     initMarqueeAnimation();
-    initClientsMarqueeAnimation(); // Added clients marquee animation
+    initClientsMarqueeAnimation();
   } else {
     console.error('GSAP or ScrollTrigger not loaded. Please add the required script tags.');
   }
