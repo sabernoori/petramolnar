@@ -122,8 +122,18 @@ function initHeroAnimation() {
     const heroTitles = document.querySelectorAll('.hero_title');
     if (heroTitles.length > 1) {
       targetElement = heroTitles[1];
+      // Hide duplicate hero_title elements
+      heroTitles.forEach((el, index) => {
+        if (index !== 1) el.style.display = 'none';
+      });
     }
   }
+
+  // Add safety check to prevent duplicate initialization
+  if (targetElement.dataset.processed) {
+    return;
+  }
+  targetElement.dataset.processed = true;
   
   // Extract text from the target element
   for (let i = 0; i < targetElement.childNodes.length; i++) {
