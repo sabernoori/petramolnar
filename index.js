@@ -33,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize other animations for all pages
     
     // Initialize the animations
-    initHeroAnimation();
     initMarqueeAnimation();
     initClientsMarqueeAnimation(); // Added clients marquee animation
   } else {
