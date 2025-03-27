@@ -11,11 +11,22 @@ document.addEventListener('DOMContentLoaded', function() {
     gsap.registerPlugin(ScrollTrigger);
     gsap.registerPlugin(TextPlugin);
     
-    // Only disable scrolling if page loads at top and we're on the homepage
-    const isHomepage = window.location.pathname === '/' || window.location.pathname === '/home' || window.location.pathname.endsWith('/index.html');
-    if (window.scrollY === 0 && isHomepage) {
-      document.body.style.overflow = 'hidden';
+    // Check if we're on the homepage
+    const isHomepage = window.location.pathname === '/' || 
+                      window.location.pathname === '/home' || 
+                      window.location.pathname.endsWith('/index.html') || 
+                      window.location.pathname.endsWith('/');
+    
+    // Only initialize hero animation and disable scroll on homepage
+    if (isHomepage) {
+      // Disable scroll only if page loads at top
+      if (window.scrollY === 0) {
+        document.body.style.overflow = 'hidden';
+      }
+      initHeroAnimation();
     }
+    
+    // Initialize other animations for all pages
     
     // Initialize the animations
     initHeroAnimation();
