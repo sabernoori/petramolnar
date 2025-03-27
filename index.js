@@ -11,8 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
     gsap.registerPlugin(ScrollTrigger);
     gsap.registerPlugin(TextPlugin);
     
-    // Only disable scrolling if page loads at top
-    if (window.scrollY === 0) {
+    // Only disable scrolling if page loads at top and we're on the homepage
+    const isHomepage = window.location.pathname === '/' || window.location.pathname === '/home' || window.location.pathname.endsWith('/index.html');
+    if (window.scrollY === 0 && isHomepage) {
       document.body.style.overflow = 'hidden';
     }
     
