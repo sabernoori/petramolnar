@@ -17,9 +17,13 @@ document.addEventListener('DOMContentLoaded', function() {
                       window.location.pathname.endsWith('/index.html') || 
                       window.location.pathname.endsWith('/');
     
-    // Only initialize hero animation and disable scroll on homepage
-    if (isHomepage) {
-      // Disable scroll only if page loads at top
+    // Only initialize hero animation and disable scroll if hero elements exist
+    const heroElements = document.querySelector('.hero_title') && 
+                        document.querySelector('.text-span') && 
+                        document.querySelector('.hero_title-little');
+    
+    if (isHomepage && heroElements) {
+      // Disable scroll only if page loads at top and hero elements exist
       if (window.scrollY === 0) {
         document.body.style.overflow = 'hidden';
       }
