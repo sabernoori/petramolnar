@@ -70,6 +70,7 @@
   overflow: hidden;
   cursor: pointer;
   color: #fff;
+  z-index: 0;
 }
 
 .w-button {
@@ -93,7 +94,7 @@
   transform: scale(0);
   transform-origin: 0 0;
   will-change: transform;
-  z-index: -1;
+  z-index: 1;
 }
 
 .button__flair:before {
@@ -119,7 +120,7 @@
 
 .button__flair:before {
   background-color: var(--_colors---brand);
-  z-index: -1;
+  z-index: 1;
 }
 
 
