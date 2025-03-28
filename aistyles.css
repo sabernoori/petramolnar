@@ -64,7 +64,7 @@
 /* Button styles with flair animation */
 .button {
   border: 1px solid #ffffff; 
-  /* background-color: #000000; */
+  background-color: #000000;
   /* Border transitions handled by GSAP */
   position: relative;
   overflow: hidden;
